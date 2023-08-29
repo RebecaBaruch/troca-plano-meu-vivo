@@ -1,22 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import '@telefonica/mistica/css/reset.css';
+import '@telefonica/mistica/css/roboto.css';
+import '@telefonica/mistica/css/mistica.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { ThemeContextProvider, getVivoSkin } from '@telefonica/mistica';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
-  <Router>
-    <Routes>
-      <Route path='/' element={<App />} />
-    </Routes>
-  </Router>
+  <ThemeContextProvider 
+    theme={{
+      skin: getVivoSkin(),
+      i18n: {
+        locale: 'es-ES',
+        phoneNumberFormattingRegionCode: 'ES',
+      },
+  }}>
+    <Router>
+      <Routes>
+          <Route path='/' element={<App />} />
+      </Routes>
+    </Router>
+  </ThemeContextProvider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
