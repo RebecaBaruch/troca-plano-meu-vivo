@@ -1,9 +1,9 @@
 import React from 'react';
+import {useNavigate} from 'react-router-dom';
 import './App.css';
 import { 
   Box, 
   ButtonFixedFooterLayout, 
-  ButtonLink, 
   ButtonPrimary, 
   DataCard, 
   IconArrowDownRegular, 
@@ -19,6 +19,12 @@ import {
 } from '@telefonica/mistica';
 
 function App() {
+  const navigate = useNavigate()
+
+  const handleButtonCheckOfferDetails = () => {
+    navigate('detalhes-ofertas');
+};
+
   return (
     <>
       <Box>
@@ -27,13 +33,7 @@ function App() {
             <NavigationBar
               onBack={() => {}}
               isInverse
-              right={
-                <Box width={300}>
-                  <Text3 regular>
-                    Troca de plano
-                  </Text3>
-                </Box>
-              }
+              title='Troca de plano'
             />
             <Box paddingTop={24} paddingX={12}>
               <ResponsiveLayout>
@@ -59,11 +59,15 @@ function App() {
                         Quero esse
                     </ButtonPrimary>
                   }
-                  secondaryButton={
-                    <ButtonLink onPress={() => console.log('Exibir mais ofertas')}>
-                      Exibir mais ofertas
-                    </ButtonLink>
-                  }
+
+                  link={
+                    <TextLink 
+                        style={{fontSize: '14px', fontWeight: 500}}
+                        onPress={() => console.log('Exibir mais ofertas')}
+                    >
+                        Exibir mais ofertas
+                    </TextLink>
+                }
                 >
                   <ResponsiveLayout>
                     <Box paddingTop={32}>
@@ -89,7 +93,9 @@ function App() {
 
                             <Box paddingY={24}>
                               <TextLink 
-                                href={`teste`}
+                                onPress={() => {
+                                  handleButtonCheckOfferDetails()
+                                }}
                                 style={{fontSize: '14px', fontWeight: 700}}
                               >
                                 {`Conferir detalhes`}
