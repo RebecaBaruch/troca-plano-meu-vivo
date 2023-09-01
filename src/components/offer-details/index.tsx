@@ -4,8 +4,8 @@ import {
     Avatar,
     Box,
     ButtonFixedFooterLayout, 
+    ButtonLink, 
     ButtonPrimary, 
-    // Circle, 
     IconWifiRegular, 
     NavigationBar, 
     Row, 
@@ -20,6 +20,10 @@ function OfferDetails(): JSX.Element{
 
     const handleBackNavigateButton = () => {
         navigate(-1)
+    }
+
+    const handleMoredDigitalServicesNavButton = () => {
+        navigate('mais-servicos-digitais')
     }
     return(
         <>
@@ -73,6 +77,12 @@ function OfferDetails(): JSX.Element{
                                 </RowList>
                             </Box>
                         </React.Fragment>
+
+                        <Box paddingTop={16}>
+                            <ButtonLink onPress={() => {handleMoredDigitalServicesNavButton()}}>
+                                {`Mais serviços`}
+                            </ButtonLink>
+                        </Box>
                     </ButtonFixedFooterLayout>
                 </Box>
             </React.Fragment>

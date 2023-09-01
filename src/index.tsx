@@ -9,6 +9,8 @@ import reportWebVitals from './reportWebVitals';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ThemeContextProvider, getVivoSkin } from '@telefonica/mistica';
 import OfferDetails from './components/offer-details';
+import MoreDigitalServices from './components/offer-details/more-digital-services';
+import MoreOffers from './components/more-offers';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -26,7 +28,9 @@ root.render(
     <Router>
       <Routes>
           <Route path='/' element={<App />} />
-          <Route path='detalhes-ofertas' element={<OfferDetails />} />
+          <Route path='/mais-servicos-digitais' element={<MoreDigitalServices/>} />
+          <Route path='/detalhes-ofertas' element={<OfferDetails />} />
+          <Route path='/mais-ofertas' element={<MoreOffers/>} />
       </Routes>
     </Router>
   </ThemeContextProvider>
