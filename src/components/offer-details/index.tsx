@@ -1,21 +1,31 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { 
+    Avatar,
     Box,
     ButtonFixedFooterLayout, 
     ButtonPrimary, 
+    // Circle, 
     IconWifiRegular, 
     NavigationBar, 
     Row, 
+    RowList, 
     TextLink,
+    Title1,
     skinVars
 } from "@telefonica/mistica";
 
 function OfferDetails(): JSX.Element{
+    const navigate = useNavigate();
+
+    const handleBackNavigateButton = () => {
+        navigate(-1)
+    }
     return(
         <>
             <React.Fragment>
                 <NavigationBar
-                    onBack={() => {}}
+                    onBack={()=> handleBackNavigateButton()}
                     isInverse
                     title="Sobre o plano"
                 />
@@ -44,6 +54,24 @@ function OfferDetails(): JSX.Element{
                                 description={`Mais velocidade pra navegar no seu celular, computador ou TV`}
                                 asset={<IconWifiRegular color={skinVars.colors.promoHighInverse} />}
                             />
+                        </React.Fragment>
+
+                        <Box paddingTop={64} paddingLeft={16}>
+                            <Title1>
+                                {`Serviços digitais inclusos`}
+                            </Title1>
+                        </Box>
+
+                        <React.Fragment>
+                            <Box paddingTop={16}>
+                                <RowList>
+                                    <Row 
+                                        title={`Paramount`}
+                                        description={`Entretenimento`}
+                                        asset={<Avatar size={40} />}
+                                    />
+                                </RowList>
+                            </Box>
                         </React.Fragment>
                     </ButtonFixedFooterLayout>
                 </Box>
