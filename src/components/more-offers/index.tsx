@@ -1,11 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { 
-    Avatar,
     Box,
+    ButtonLink,
+    ButtonPrimary,
+    DataCard,
+    Inline,
     NavigationBar,
-    Row,
-    RowList, 
+    Text2,
+    Text3,
 } from "@telefonica/mistica";
 
 function MoreOffers(): JSX.Element{
@@ -21,20 +24,44 @@ function MoreOffers(): JSX.Element{
                 <NavigationBar
                         onBack={()=> {handleBackNavigateButton()}}
                         isInverse
-                        title={`Serviços digitais`}
+                        title={`Mais ofertas`}
                 />
 
-                <Box paddingTop={32}>
+                <Box paddingTop={24} paddingBottom={40} paddingX={16}>
                     <React.Fragment>
-                        <RowList>
-                            <Row 
-                                title={`Paramount`}
-                                description={`Entretenimento`}
-                                asset={<Avatar size={40} />}
+                        <Box paddingTop={16}>
+                            <DataCard
+                                extra={
+                                    <Box>
+                                        <Box>
+                                            <Text3 medium>
+                                                {`Vivo Fibra 700 Mega`}
+                                            </Text3>
+                                        </Box>
+
+                                        <Inline space={0} alignItems="baseline">
+                                            <Text2 as="p" medium>
+                                                {`R$ 179,99 /mês`}
+                                            </Text2>
+                                        </Inline>
+
+                                        <Box paddingTop={16}>
+                                            <Inline alignItems="center" space={4}>
+                                                <ButtonPrimary onPress={() =>{}}>
+                                                    {'Quero esse'}                                                
+                                                </ButtonPrimary>
+                                                <ButtonLink onPress={() =>{}}>
+                                                    {'Conferir detalhes'}
+                                                </ButtonLink>
+                                            </Inline>
+                                        </Box>
+                                    </Box>
+                                }
                             />
-                        </RowList>
+                        </Box>
                     </React.Fragment>
                 </Box>
+                
             </React.Fragment>
         </>
     )
