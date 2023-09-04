@@ -11,6 +11,7 @@ import { ThemeContextProvider, getVivoSkin } from '@telefonica/mistica';
 import OfferDetails from './components/offer-details';
 import MoreDigitalServices from './components/offer-details/more-digital-services';
 import MoreOffers from './components/more-offers';
+import NewPlan from './components/new-plan';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -31,6 +32,7 @@ root.render(
           <Route path='/mais-servicos-digitais' element={<MoreDigitalServices/>} />
           <Route path='/detalhes-ofertas' element={<OfferDetails />} />
           <Route path='/mais-ofertas' element={<MoreOffers/>} />
+          <Route path='/novo-plano' element={<NewPlan/>} />
       </Routes>
     </Router>
   </ThemeContextProvider>

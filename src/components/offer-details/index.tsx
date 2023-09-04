@@ -23,7 +23,7 @@ function OfferDetails(): JSX.Element{
     }
 
     const handleMoredDigitalServicesNavButton = () => {
-        navigate('mais-servicos-digitais')
+        navigate('/mais-servicos-digitais')
     }
     return(
         <>
