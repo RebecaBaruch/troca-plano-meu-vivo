@@ -32,7 +32,7 @@ root.render(
           <Route path='/mais-servicos-digitais' element={<MoreDigitalServices/>} />
           <Route path='/detalhes-ofertas' element={<OfferDetails />} />
           <Route path='/mais-ofertas' element={<MoreOffers/>} />
-          <Route path='/novo-plano' element={<NewPlan/>} />
+          <Route path='/checkout' element={<NewPlan/>} />
       </Routes>
     </Router>
   </ThemeContextProvider>

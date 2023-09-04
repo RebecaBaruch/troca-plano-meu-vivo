@@ -25,7 +25,7 @@ function App() {
   };
   
   const handleButtonNewPlan = () => {
-    navigate('/novo-plano');
+    navigate('/checkout');
   }
 
   const handleButtonShowMoreOffers = () => {
@@ -41,7 +41,6 @@ function App() {
               isInverse
               title='Troca de plano'
             />
-            <ResponsiveLayout>
               <Box paddingTop={24} paddingX={12}>
                 <ResponsiveLayout>
                     <Text6 as='p'>Tenha ainda mais velocidade por até R$x por mês</Text6>
@@ -116,7 +115,6 @@ function App() {
                   </ButtonFixedFooterLayout>
                 </React.Fragment>
               </Box>
-            </ResponsiveLayout>
           </React.Fragment>
       </Box>
     </>

@@ -1,4 +1,5 @@
 import React from "react"
+import { useNavigate } from "react-router-dom";
 import {
     Box,
     ButtonLink,
@@ -15,8 +16,14 @@ import {
     Text3,
     skinVars,
  } from "@telefonica/mistica";
-
+ 
 function NewPlan(): JSX.Element{
+    const navigate = useNavigate()
+
+    const handleBackNavigateButton = () => {
+        navigate(-1)
+    }
+
     const handleButtonConfirm = () => {
         console.log('Confirmar')
     }
@@ -60,7 +67,7 @@ function NewPlan(): JSX.Element{
                         }
                         >
                         <NavigationBar
-                            onBack={() => {}}
+                            onBack={() => {handleBackNavigateButton()}}
                             isInverse
                             title='Novo plano'
                         />
