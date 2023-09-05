@@ -25,6 +25,15 @@ function OfferDetails(): JSX.Element{
     const handleMoredDigitalServicesNavButton = () => {
         navigate('/mais-servicos-digitais')
     }
+
+    const handleButtonNewPlan = () => {
+        navigate('/checkout');
+    }
+
+    const handleButtonShowMoreOffers = () => {
+        navigate('/mais-ofertas');
+    }
+
     return(
         <>
             <React.Fragment>
@@ -37,7 +46,7 @@ function OfferDetails(): JSX.Element{
                     <ButtonFixedFooterLayout
                         button={
                             <ButtonPrimary
-                                onPress={() => console.log('Quero esse')}
+                                onPress={() => handleButtonNewPlan()}
                             >
                                 Quero esse
                             </ButtonPrimary>
@@ -46,7 +55,7 @@ function OfferDetails(): JSX.Element{
                         link={
                             <TextLink 
                                 style={{fontSize: '14px', fontWeight: 500}}
-                                onPress={() => console.log('Exibir mais ofertas')}
+                                onPress={() => handleButtonShowMoreOffers()}
                             >
                                 Exibir mais ofertas
                             </TextLink>
