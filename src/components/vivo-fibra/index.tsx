@@ -27,7 +27,7 @@ function VivoFibra(): JSX.Element{
             <NavigationBar
                 onBack={() => {handleBackNavigateButton()}}
                 isInverse
-                title='Novo plano'
+                title='Vivo Fibra'
             />
             <FixedFooterLayout
                 footer={
@@ -40,7 +40,7 @@ function VivoFibra(): JSX.Element{
                                     </Text1>
                                     <Inline space={0} alignItems="baseline">
                                         <Text3 medium as="p">
-                                            {`R$`}
+                                            {`R$ 159,99/mês`}
                                         </Text3>
  
                                         <Text1 as="p" regular>
@@ -61,22 +61,64 @@ function VivoFibra(): JSX.Element{
                 }
             >
                 <ResponsiveLayout>
-                    <RadioGroup name="card" value={'blabla'}>
+                    <RadioGroup name="card" defaultValue={'vivo-fibra-700'}>
                         <Box paddingTop={24}>
-                                <React.Fragment>
+                            <React.Fragment>
+                                <BoxedRow
+                                    title=""
+                                    extra={
+                                        <Box>
+                                            <Box>
+                                                <Text3 medium as="p">
+                                                    {`Vivo Fibra 700 Mega`}
+                                                </Text3>
+                                            </Box>
+
+                                            <Inline space={0} alignItems="baseline">
+                                                <Text2 as="p" medium>
+                                                    {`R$ 199,99/mês`}
+                                                </Text2>
+
+                                                <Text2 as="p" medium>
+                                                    {`/mês`}
+                                                </Text2>
+                                            </Inline>
+
+                                            <Box paddingTop={12}>
+                                                <TextLink
+                                                    style={{
+                                                        textDecoration: 'none',
+                                                        fontSize: '14px',
+                                                        fontWeight: 500,
+                                                    }}
+                                                    onPress={() => {}}
+                                                >
+                                                    {`Conferir detalhes`}
+                                                </TextLink>
+                                            </Box>
+                                        </Box>
+                                    }
+                                    radioValue={'vivo-fibra-700'}
+                                    onPress={() => {}}
+                                />
+                            </React.Fragment>
+                        </Box>
+                        <Box>
+                            <React.Fragment>
+                                <Box paddingTop={16}>
                                     <BoxedRow
                                         title=""
                                         extra={
                                             <Box>
                                                 <Box>
                                                     <Text3 medium as="p">
-                                                        {`Vivo Fibra 700 Mega`}
+                                                        {`Vivo Fibra 700 Mega + Netflix`}
                                                     </Text3>
                                                 </Box>
 
                                                 <Inline space={0} alignItems="baseline">
                                                     <Text2 as="p" medium>
-                                                        {`R$ 199,99/mês`}
+                                                        {`R$ 189,99/mês`}
                                                     </Text2>
 
                                                     <Text2 as="p" medium>
@@ -98,58 +140,13 @@ function VivoFibra(): JSX.Element{
                                                 </Box>
                                             </Box>
                                         }
-                                        radioValue={'blaba'}
+                                        radioValue={'vivo-fibra-700-netflix'}
                                         onPress={() => {}}
                                     />
-                                </React.Fragment>
-                            </Box>
-                        </RadioGroup>
-
-                        <RadioGroup name="card" value={'blab'}>
-                            <Box>
-                                <React.Fragment>
-                                    <Box paddingTop={16}>
-                                        <BoxedRow
-                                            title=""
-                                            extra={
-                                                <Box>
-                                                    <Box>
-                                                        <Text3 medium as="p">
-                                                            {`Vivo Fibra 700 Mega + Netflix`}
-                                                            </Text3>
-                                                        </Box>
-
-                                                        <Inline space={0} alignItems="baseline">
-                                                            <Text2 as="p" medium>
-                                                                {`R$ 189,99/mês`}
-                                                            </Text2>
-
-                                                           <Text2 as="p" medium>
-                                                                {`/mês`}
-                                                            </Text2>
-                                                        </Inline>
-
-                                                        <Box paddingTop={12}>
-                                                            <TextLink
-                                                                style={{
-                                                                    textDecoration: 'none',
-                                                                    fontSize: '14px',
-                                                                    fontWeight: 500,
-                                                                }}
-                                                                onPress={() => {}}
-                                                            >
-                                                                {`Conferir detalhes`}
-                                                            </TextLink>
-                                                        </Box>
-                                                    </Box>
-                                            }
-                                            radioValue={'blab'}
-                                            onPress={() => {}}
-                                        />
-                                    </Box>
-                                </React.Fragment>
-                            </Box>
-                        </RadioGroup>
+                                </Box>
+                            </React.Fragment>
+                        </Box>
+                    </RadioGroup>
                 </ResponsiveLayout>
             </FixedFooterLayout>
         </>
