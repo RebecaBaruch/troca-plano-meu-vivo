@@ -29,7 +29,7 @@ function NewPlan(): JSX.Element{
     }
 
     const handleButtonLink = () => {
-        console.log('Alterar')
+        navigate('/vivo-fibra')
     }
 
     return(

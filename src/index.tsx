@@ -12,6 +12,7 @@ import OfferDetails from './components/offer-details';
 import MoreDigitalServices from './components/offer-details/more-digital-services';
 import MoreOffers from './components/more-offers';
 import NewPlan from './components/new-plan';
+import VivoFibra from './components/vivo-fibra';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -33,6 +34,7 @@ root.render(
           <Route path='/detalhes-ofertas' element={<OfferDetails />} />
           <Route path='/mais-ofertas' element={<MoreOffers/>} />
           <Route path='/checkout' element={<NewPlan/>} />
+          <Route path='/vivo-fibra' element={<VivoFibra/>} />
       </Routes>
     </Router>
   </ThemeContextProvider>
