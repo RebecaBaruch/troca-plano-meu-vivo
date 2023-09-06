@@ -28,7 +28,7 @@ export const planMock: GetOffers = {
 
         monthlyPrices: '507.00',
 
-        description: 'Description',
+        description: '',
 
         recurringPeriod: 'monthly',
 

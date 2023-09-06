@@ -1,11 +1,14 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react' ;
+import { planMock } from '../../mock';
 import { 
   Box, 
   ButtonFixedFooterLayout, 
   ButtonPrimary, 
   DataCard, 
-  IconArrowDownRegular, 
+  IconArrowDownLight, 
+  IconArrowUpLight, 
   Inline, 
   NavigationBar, 
   ResponsiveLayout,
@@ -16,9 +19,13 @@ import {
   TextLink,
   skinVars,
 } from '@telefonica/mistica';
+import { GetOffers } from '../../types';
 
 function OfferRecommended() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  
+  // const [isLoading, setIsLoading] = useState(true);
+  const [getOffers, setGetOffers] = useState<GetOffers[]>([]);
 
   const handleButtonCheckOfferDetails = () => {
     navigate('/detalhes-ofertas');
@@ -32,6 +39,21 @@ function OfferRecommended() {
     navigate('/mais-ofertas');
   }
 
+  useEffect(() => {
+    const fetchDataFromMock = async () => {
+      try {
+        const mockData = planMock;
+        setGetOffers([mockData]);
+        // setIsLoading(false)
+      } catch (error) {
+        return('Erro ao buscar dados do mock' + error);
+        // setIsLoading(false);
+      }
+    }
+
+    fetchDataFromMock();
+  }, []);
+
   return (
     <>
       <Box>
@@ -43,78 +65,175 @@ function OfferRecommended() {
             />
               <Box paddingTop={24} paddingX={12}>
                 <ResponsiveLayout>
-                    <Text6 as='p'>Tenha ainda mais velocidade por até R$x por mês</Text6>
-                    <Box paddingTop={32}>
-                      <Text3 as='p' regular>
-                        {`Seus planos: Vivo Fibra 300 Mega e Netflix Padrão`}
-                      </Text3>
-                      <Inline space={0} alignItems='baseline'>
-                        <Text2 as='p' regular>
-                          {`R$77,77`}
-                        </Text2>
-                        <Text2 as='p' regular>/mês</Text2>
-                      </Inline>
-                    </Box>
+                  {getOffers.map((item) => (
+                    <React.Fragment key={item.bestOffer.offerId}>
+                      <Text6 as='p'>{item.ownerPlan.title}</Text6>
+                      <Box paddingTop={32}>
+                        <Text3 as='p' regular>
+                          {item.ownerPlan.plan}
+                        </Text3>
+                        <Inline space={0} alignItems='baseline'>
+                          <Text2 as='p' regular>
+                            {item.ownerPlan.price}
+                          </Text2>
+                          {(() => {
+                            switch(item.ownerPlan.recurringPeriod){
+                              case 'daily':
+                                return(
+                                  <Text2 as='p' regular>
+                                    {'/dia'}
+                                  </Text2>
+                                );
+                              case 'weekly':
+                                return(
+                                  <Text2 as='p' regular>
+                                    {'/semana'}
+                                  </Text2>
+                                );
+                              case 'yearly':
+                                return(
+                                  <Text2 as='p' regular>
+                                    {'/ano'}
+                                  </Text2>
+                                );
+                              default:
+                                return(
+                                  <Text2 as='p' regular>
+                                    {'/mês'}
+                                  </Text2>
+                                );
+                            }
+                          })()}
+                        </Inline>
+                      </Box>
+                    </React.Fragment>
+                  ))}
                 </ResponsiveLayout>
 
-                <React.Fragment>
-                  <ButtonFixedFooterLayout
-                    button={
-                      <ButtonPrimary 
-                        onPress={() => handleButtonNewPlan()}>
-                          Quero esse
-                      </ButtonPrimary>
-                    }
+                {getOffers.map((item) => (
+                  <React.Fragment key={item.bestOffer.offerId}>
+                    <ButtonFixedFooterLayout
+                      button={
+                        <ButtonPrimary 
+                          onPress={() => handleButtonNewPlan()}>
+                            Quero esse
+                        </ButtonPrimary>
+                      }
 
-                    link={
-                      <TextLink 
-                          style={{fontSize: '14px', fontWeight: 500}}
-                          onPress={() => handleButtonShowMoreOffers()}
+                      link={
+                        <TextLink 
+                            style={{fontSize: '14px', fontWeight: 500}}
+                            onPress={() => handleButtonShowMoreOffers()}
+                        >
+                            Exibir mais ofertas
+                        </TextLink>
+                      }
                       >
-                          Exibir mais ofertas
-                      </TextLink>
-                  }
-                  >
-                    <ResponsiveLayout>
-                      <Box paddingTop={32}>
-                        <DataCard
-                          headline={`Oferta para você`}
-                          extra={
-                            <>
-                              <Box paddingTop={16}>
-                                <Text4 as='p' medium>
-                                  {`Vivo Fibra 500 Mega Netflix Premium`}
-                                </Text4>
-                                <Text6>
-                                  {`R$ 195,99/mês`}
-                                </Text6>
-                              </Box>
+                      <ResponsiveLayout>
+                        <Box paddingTop={32}>
+                          <DataCard
+                            headline={`Oferta para você`}
+                            extra={
+                              <>
+                                <Box paddingTop={16}>
+                                  <Text4 as='p' medium>
+                                    {item.bestOffer.displayName}
+                                  </Text4>
+                                  <Inline space={0} alignItems='baseline'>
+                                    <Text6>
+                                      {`R$ ${item.bestOffer.monthlyPrices.replace('.', ',')}`}
+                                    </Text6>
+                                    
+                                    {(() => {
+                                      switch(item.ownerPlan.recurringPeriod){
+                                        case 'daily':
+                                          return(
+                                            <Text2 as='p' regular>
+                                              {'/dia'}
+                                            </Text2>
+                                          );
+                                        case 'weekly':
+                                          return(
+                                            <Text2 as='p' regular>
+                                              {'/semana'}
+                                            </Text2>
+                                          );
+                                        case 'yearly':
+                                          return(
+                                            <Text2 as='p' regular>
+                                              {'/ano'}
+                                            </Text2>
+                                          );
+                                        default:
+                                          return(
+                                            <Text2 as='p' regular>
+                                              {'/mês'}
+                                            </Text2>
+                                          );
+                                      }
+                                    })()}
+                                  </Inline>
+                                </Box>
+                                
+                                {item.bestOffer.download && item.bestOffer.upload && (
+                                  <>
+                                    <Box paddingTop={24}>
+                                      <Inline space={4} alignItems="center">
+                                        <Box>
+                                          <IconArrowDownLight
+                                            color={skinVars.colors.promoHighInverse}
+                                          />
+                                        </Box>
 
-                              <Box paddingTop={24}>
-                                <Inline space={8}>
-                                  <IconArrowDownRegular color={skinVars.colors.promoHighInverse} />
-                                  <Text3 regular>{`Download com até 500 Mbps`}</Text3>
-                                </Inline>
-                              </Box>
+                                        <Box>
+                                          <Box>
+                                            <Text2 as="p" regular>
+                                              {item.bestOffer.download}
+                                            </Text2>
+                                          </Box>
+                                        </Box>
+                                      </Inline>
+                                    </Box>
 
-                              <Box paddingY={24}>
-                                <TextLink 
-                                  onPress={() => {
-                                    handleButtonCheckOfferDetails()
-                                  }}
-                                  style={{fontSize: '14px', fontWeight: 700}}
-                                >
-                                  {`Conferir detalhes`}
-                                </TextLink>
-                              </Box>
-                            </>
-                          }
-                        />
-                      </Box>
-                    </ResponsiveLayout>
-                  </ButtonFixedFooterLayout>
-                </React.Fragment>
-              </Box>
+                                    <Box paddingTop={8}>
+                                      <Inline space={4} alignItems="center">
+                                        <Box>
+                                          <IconArrowUpLight
+                                            color={skinVars.colors.promoHighInverse}
+                                          />
+                                        </Box>
+
+                                        <Box>
+                                          <Box>
+                                            <Text2 as="p" regular>
+                                              {item.bestOffer.upload}
+                                            </Text2>
+                                          </Box>
+                                        </Box>
+                                      </Inline>
+                                    </Box>
+                                  </>
+                                )}
+
+                                <Box paddingY={24}>
+                                  <TextLink 
+                                    onPress={() => {
+                                      handleButtonCheckOfferDetails()
+                                    }}
+                                    style={{fontSize: '14px', fontWeight: 700}}
+                                  >
+                                    {`Conferir detalhes`}
+                                  </TextLink>
+                                </Box>
+                              </>
+                            }
+                          />
+                        </Box>
+                      </ResponsiveLayout>
+                    </ButtonFixedFooterLayout>
+                  </React.Fragment>
+                ))}
+            </Box>
           </React.Fragment>
       </Box>
     </>
