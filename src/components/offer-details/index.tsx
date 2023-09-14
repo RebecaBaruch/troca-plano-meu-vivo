@@ -18,10 +18,10 @@ import useCartData from "../../hook/use-cart-data";
 import { Offer } from "../../types";
 
 function OfferDetails(): JSX.Element{
-    const {takeOffersDetails} = useCartData();
-    const offersDetails = takeOffersDetails();
-
     const navigate = useNavigate();
+    
+    const {sendInternetPlanSelected, takeOffersDetails} = useCartData();
+    const offersDetails = takeOffersDetails();
 
     const handleBackNavigateButton = () => {
         navigate(-1)
@@ -31,7 +31,8 @@ function OfferDetails(): JSX.Element{
         navigate('/mais-servicos-digitais')
     }
 
-    const handleButtonNewPlan = () => {
+    const handleButtonNewPlan = (planItem: Offer) => {
+        sendInternetPlanSelected(planItem);
         navigate('/checkout');
     }
 
@@ -51,7 +52,7 @@ function OfferDetails(): JSX.Element{
                     <ButtonFixedFooterLayout
                         button={
                             <ButtonPrimary
-                                onPress={() => handleButtonNewPlan()}
+                                onPress={() => handleButtonNewPlan(offersDetails[0])}
                             >
                                 Quero esse
                             </ButtonPrimary>

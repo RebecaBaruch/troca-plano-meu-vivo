@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import {
     Box,
@@ -21,10 +21,10 @@ import { Offer } from "../../types";
 import useDataFormat from "../../hook/use-data-format";
  
 function NewPlan(): JSX.Element{
+    const navigate = useNavigate();
+    
     const {takeInternetPlanSelected, totalPrice} = useCartData();
     const {priceFormat, pricePeriod} = useDataFormat();
-
-    const navigate = useNavigate();
 
     const newPlan: Offer = takeInternetPlanSelected();
 

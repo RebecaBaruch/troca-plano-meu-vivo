@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { 
     FixedFooterLayout, 
     ResponsiveLayout, 
@@ -19,6 +19,8 @@ import { Offer } from "../../types";
 import useDataFormat from "../../hook/use-data-format";
 
 function VivoFibra(): JSX.Element{
+    const navigate = useNavigate();
+
     const {
         takeInternetPlanSelected,
         takeAllOffers,
@@ -32,8 +34,6 @@ function VivoFibra(): JSX.Element{
 
     const bestOffer = takeAllOffers().map((item) => item.bestOffer);
     const otherOffers = takeAllOffers()[0].otherOffers;
-
-    const navigate = useNavigate()
 
     const newPlan: Offer = takeInternetPlanSelected()
 
@@ -82,49 +82,8 @@ function VivoFibra(): JSX.Element{
                 <ResponsiveLayout>
                     <RadioGroup name="card" defaultValue={bestOffer[0].offerId}>
                         <Box paddingTop={24}>
-                            {bestOffer.map((item: Offer) => {
-                                return <React.Fragment key={item.offerId}>
-                                    <BoxedRow
-                                        title=""
-                                        extra={<Box>
-                                            <Box>
-                                                <Text3 medium as="p">
-                                                    {item.displayName}
-                                                </Text3>
-                                            </Box>
-
-                                            <Inline space={0} alignItems="baseline">
-                                                <Text2 as="p" medium>
-                                                    {priceFormat(item)}
-                                                </Text2>
-
-                                                <Text2 as="p" medium>
-                                                    {pricePeriod(item)}
-                                                </Text2>
-                                            </Inline>
-
-                                            <Box paddingTop={12}>
-                                                <TextLink
-                                                    style={{
-                                                        textDecoration: 'none',
-                                                        fontSize: '14px',
-                                                        fontWeight: 500,
-                                                    }}
-                                                    onPress={() => { } }
-                                                >
-                                                    {`Conferir detalhes`}
-                                                </TextLink>
-                                            </Box>
-                                        </Box>}
-                                        radioValue={String(item.offerId)}
-                                        onPress={() => { } } />
-                                </React.Fragment>;
-                            })}
-                        </Box>
-                        <Box>
-                            {otherOffers.map((item: Offer) => {
-                                return <React.Fragment key={item.offerId}>
-                                <Box paddingTop={16}>
+                            {bestOffer.map((item: Offer) => (
+                                <React.Fragment key={item.offerId}>
                                     <BoxedRow
                                         title=""
                                         extra={
@@ -152,7 +111,7 @@ function VivoFibra(): JSX.Element{
                                                             fontSize: '14px',
                                                             fontWeight: 500,
                                                         }}
-                                                        onPress={() => {}}
+                                                        onPress={() => { } }
                                                     >
                                                         {`Conferir detalhes`}
                                                     </TextLink>
@@ -160,12 +119,54 @@ function VivoFibra(): JSX.Element{
                                             </Box>
                                         }
                                         radioValue={String(item.offerId)}
-                                        onPress={() => {}}
-                                    />
-                                </Box>
-                            </React.Fragment>
-                            
-                            })}
+                                        onPress={() => { } } />
+                                </React.Fragment>
+                            ))}
+                        </Box>
+                        <Box>
+                            {otherOffers.map((item: Offer) => (
+                                <React.Fragment key={item.offerId}>
+                                    <Box paddingTop={16}>
+                                        <BoxedRow
+                                            title=""
+                                            extra={
+                                                <Box>
+                                                    <Box>
+                                                        <Text3 medium as="p">
+                                                            {item.displayName}
+                                                        </Text3>
+                                                    </Box>
+
+                                                    <Inline space={0} alignItems="baseline">
+                                                        <Text2 as="p" medium>
+                                                            {priceFormat(item)}
+                                                        </Text2>
+
+                                                        <Text2 as="p" medium>
+                                                            {pricePeriod(item)}
+                                                        </Text2>
+                                                    </Inline>
+
+                                                    <Box paddingTop={12}>
+                                                        <TextLink
+                                                            style={{
+                                                                textDecoration: 'none',
+                                                                fontSize: '14px',
+                                                                fontWeight: 500,
+                                                            }}
+                                                            onPress={() => {}}
+                                                        >
+                                                            {`Conferir detalhes`}
+                                                        </TextLink>
+                                                    </Box>
+                                                </Box>
+                                            }
+                                            radioValue={String(item.offerId)}
+                                            onPress={() => {}}
+                                        />
+                                    </Box>
+                                </React.Fragment>
+                            ))}
                         </Box>
                     </RadioGroup>
                 </ResponsiveLayout>

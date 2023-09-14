@@ -17,7 +17,7 @@ function MoreDigitalServices(): JSX.Element{
     const navigate = useNavigate();
 
     const handleBackNavigateButton = () => {
-        navigate(-1)
+        navigate(-1);
     }
 
     return(

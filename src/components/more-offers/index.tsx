@@ -14,12 +14,12 @@ import useCartData from "../../hook/use-cart-data";
 import useDataFormat from "../../hook/use-data-format";
 
 function MoreOffers(): JSX.Element{
-    const {takeAllOffers} = useCartData();
-    const moreOffers = takeAllOffers();
-
-    const {priceFormat, pricePeriod} = useDataFormat();
-
     const navigate = useNavigate();
+    
+    const {takeAllOffers} = useCartData();
+    const {priceFormat, pricePeriod} = useDataFormat();
+    
+    const moreOffers = takeAllOffers();
 
     const handleBackNavigateButton = () => {
         navigate(-1)
