@@ -28,7 +28,7 @@ export const planMock: GetOffers = {
 
         monthlyPrices: '507.00',
 
-        description: '',
+        description: 'Mais velocidade pra navegar no seu celular, computador ou TV',
 
         recurringPeriod: 'monthly',
 

@@ -14,9 +14,28 @@ import {
     NavigationBar
 } from "@telefonica/mistica";
 import { useNavigate } from "react-router-dom";
+import useCartData from "../../hook/use-cart-data";
+import { Offer } from "../../types";
+import useDataFormat from "../../hook/use-data-format";
 
 function VivoFibra(): JSX.Element{
+    const {
+        takeInternetPlanSelected,
+        takeAllOffers,
+        totalPrice
+    } = useCartData();
+
+    const {
+        pricePeriod,
+        priceFormat
+    } = useDataFormat();
+
+    const bestOffer = takeAllOffers().map((item) => item.bestOffer);
+    const otherOffers = takeAllOffers()[0].otherOffers;
+
     const navigate = useNavigate()
+
+    const newPlan: Offer = takeInternetPlanSelected()
 
     const handleBackNavigateButton = () => {
         navigate(-1)
@@ -40,11 +59,11 @@ function VivoFibra(): JSX.Element{
                                     </Text1>
                                     <Inline space={0} alignItems="baseline">
                                         <Text3 medium as="p">
-                                            {`R$ 159,99/mês`}
+                                            {priceFormat(totalPrice)}
                                         </Text3>
  
                                         <Text1 as="p" regular>
-                                            {`/mês`}
+                                            {pricePeriod(newPlan)}
                                         </Text1>
                                                     
                                     </Inline>
@@ -61,26 +80,26 @@ function VivoFibra(): JSX.Element{
                 }
             >
                 <ResponsiveLayout>
-                    <RadioGroup name="card" defaultValue={'vivo-fibra-700'}>
+                    <RadioGroup name="card" defaultValue={bestOffer[0].offerId}>
                         <Box paddingTop={24}>
-                            <React.Fragment>
-                                <BoxedRow
-                                    title=""
-                                    extra={
-                                        <Box>
+                            {bestOffer.map((item: Offer) => {
+                                return <React.Fragment key={item.offerId}>
+                                    <BoxedRow
+                                        title=""
+                                        extra={<Box>
                                             <Box>
                                                 <Text3 medium as="p">
-                                                    {`Vivo Fibra 700 Mega`}
+                                                    {item.displayName}
                                                 </Text3>
                                             </Box>
 
                                             <Inline space={0} alignItems="baseline">
                                                 <Text2 as="p" medium>
-                                                    {`R$ 199,99/mês`}
+                                                    {priceFormat(item)}
                                                 </Text2>
 
                                                 <Text2 as="p" medium>
-                                                    {`/mês`}
+                                                    {pricePeriod(item)}
                                                 </Text2>
                                             </Inline>
 
@@ -91,20 +110,20 @@ function VivoFibra(): JSX.Element{
                                                         fontSize: '14px',
                                                         fontWeight: 500,
                                                     }}
-                                                    onPress={() => {}}
+                                                    onPress={() => { } }
                                                 >
                                                     {`Conferir detalhes`}
                                                 </TextLink>
                                             </Box>
-                                        </Box>
-                                    }
-                                    radioValue={'vivo-fibra-700'}
-                                    onPress={() => {}}
-                                />
-                            </React.Fragment>
+                                        </Box>}
+                                        radioValue={String(item.offerId)}
+                                        onPress={() => { } } />
+                                </React.Fragment>;
+                            })}
                         </Box>
                         <Box>
-                            <React.Fragment>
+                            {otherOffers.map((item: Offer) => {
+                                return <React.Fragment key={item.offerId}>
                                 <Box paddingTop={16}>
                                     <BoxedRow
                                         title=""
@@ -112,17 +131,17 @@ function VivoFibra(): JSX.Element{
                                             <Box>
                                                 <Box>
                                                     <Text3 medium as="p">
-                                                        {`Vivo Fibra 700 Mega + Netflix`}
+                                                        {item.displayName}
                                                     </Text3>
                                                 </Box>
 
                                                 <Inline space={0} alignItems="baseline">
                                                     <Text2 as="p" medium>
-                                                        {`R$ 189,99/mês`}
+                                                        {priceFormat(item)}
                                                     </Text2>
 
                                                     <Text2 as="p" medium>
-                                                        {`/mês`}
+                                                        {pricePeriod(item)}
                                                     </Text2>
                                                 </Inline>
 
@@ -140,11 +159,13 @@ function VivoFibra(): JSX.Element{
                                                 </Box>
                                             </Box>
                                         }
-                                        radioValue={'vivo-fibra-700-netflix'}
+                                        radioValue={String(item.offerId)}
                                         onPress={() => {}}
                                     />
                                 </Box>
                             </React.Fragment>
+                            
+                            })}
                         </Box>
                     </RadioGroup>
                 </ResponsiveLayout>

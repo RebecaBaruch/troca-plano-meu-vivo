@@ -14,8 +14,13 @@ import {
     Title1,
     skinVars
 } from "@telefonica/mistica";
+import useCartData from "../../hook/use-cart-data";
+import { Offer } from "../../types";
 
 function OfferDetails(): JSX.Element{
+    const {takeOffersDetails} = useCartData();
+    const offersDetails = takeOffersDetails();
+
     const navigate = useNavigate();
 
     const handleBackNavigateButton = () => {
@@ -61,13 +66,15 @@ function OfferDetails(): JSX.Element{
                             </TextLink>
                         }
                     >
-                        <React.Fragment>
-                            <Row 
-                                title={`Vivo Fibra 500 Mega`}
-                                description={`Mais velocidade pra navegar no seu celular, computador ou TV`}
-                                asset={<IconWifiRegular color={skinVars.colors.promoHighInverse} />}
-                            />
-                        </React.Fragment>
+                        {offersDetails.map((item: Offer) => (
+                            <React.Fragment key={item.offerId}>
+                                <Row 
+                                    title={item.displayName }
+                                    description={item.description}
+                                    asset={<IconWifiRegular color={skinVars.colors.promoHighInverse} />}
+                                />
+                            </React.Fragment>
+                        ))}
 
                         <Box paddingTop={64} paddingLeft={16}>
                             <Title1>
@@ -75,17 +82,21 @@ function OfferDetails(): JSX.Element{
                             </Title1>
                         </Box>
 
-                        <React.Fragment>
-                            <Box paddingTop={16}>
-                                <RowList>
-                                    <Row 
-                                        title={`Paramount`}
-                                        description={`Entretenimento`}
-                                        asset={<Avatar size={40} />}
-                                    />
-                                </RowList>
-                            </Box>
-                        </React.Fragment>
+                        {offersDetails.map((item: Offer) => (
+                            item.subProducts.slice(0, 3).map((subItem) =>
+                                <React.Fragment key={subItem.name}>
+                                    <Box paddingTop={16}>
+                                        <RowList>
+                                            <Row 
+                                                title={subItem.name}
+                                                description={subItem.category}
+                                                asset={<Avatar size={40} />}
+                                            />
+                                        </RowList>
+                                    </Box>
+                                </React.Fragment>
+                            )
+                        ))}
 
                         <Box paddingTop={16}>
                             <ButtonLink onPress={() => {handleMoredDigitalServicesNavButton()}}>

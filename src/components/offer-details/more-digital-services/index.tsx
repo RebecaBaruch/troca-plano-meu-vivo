@@ -7,8 +7,13 @@ import {
     Row,
     RowList, 
 } from "@telefonica/mistica";
+import useCartData from "../../../hook/use-cart-data";
+import { Offer } from "../../../types";
 
 function MoreDigitalServices(): JSX.Element{
+    const {takeOffersDetails} = useCartData();
+    const offersDetails = takeOffersDetails();
+    
     const navigate = useNavigate();
 
     const handleBackNavigateButton = () => {
@@ -24,15 +29,21 @@ function MoreDigitalServices(): JSX.Element{
                      />
             
                     <Box paddingTop={32}>
-                        <React.Fragment>
-                            <RowList>
-                                <Row 
-                                    title={`Paramount`}
-                                    description={`Entretenimento`}
-                                    asset={<Avatar size={40} />}
-                                />
-                            </RowList>
-                        </React.Fragment>
+                        {offersDetails.map((item: Offer) => (
+                            item.subProducts.map((subItem) =>
+                                <React.Fragment key={subItem.name}>
+                                    <Box paddingTop={16}>
+                                        <RowList>
+                                            <Row 
+                                                title={subItem.name}
+                                                description={subItem.category}
+                                                asset={<Avatar size={40} />}
+                                            />
+                                        </RowList>
+                                    </Box>
+                                </React.Fragment>
+                            )
+                        ))}
                     </Box>
                 </React.Fragment>
              </>

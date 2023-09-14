@@ -10,8 +10,15 @@ import {
     Text2,
     Text3,
 } from "@telefonica/mistica";
+import useCartData from "../../hook/use-cart-data";
+import useDataFormat from "../../hook/use-data-format";
 
 function MoreOffers(): JSX.Element{
+    const {takeAllOffers} = useCartData();
+    const moreOffers = takeAllOffers();
+
+    const {priceFormat, pricePeriod} = useDataFormat();
+
     const navigate = useNavigate();
 
     const handleBackNavigateButton = () => {
@@ -28,38 +35,47 @@ function MoreOffers(): JSX.Element{
                 />
 
                 <Box paddingTop={24} paddingBottom={40} paddingX={16}>
-                    <React.Fragment>
-                        <Box paddingTop={16}>
-                            <DataCard
-                                extra={
-                                    <Box>
-                                        <Box>
-                                            <Text3 medium>
-                                                {`Vivo Fibra 700 Mega`}
-                                            </Text3>
-                                        </Box>
+                    {moreOffers && 
+                        moreOffers.map((item) => (
+                            item.otherOffers.map((subItem) => (
+                                <React.Fragment key={subItem.offerId}>
+                                    <Box paddingTop={16}>
+                                        <DataCard
+                                            extra={
+                                                <Box>
+                                                    <Box>
+                                                        <Text3 medium>
+                                                            {subItem.displayName}
+                                                        </Text3>
+                                                    </Box>
 
-                                        <Inline space={0} alignItems="baseline">
-                                            <Text2 as="p" medium>
-                                                {`R$ 179,99 /mês`}
-                                            </Text2>
-                                        </Inline>
+                                                    <Inline space={0} alignItems="baseline">
+                                                        <Text2 as="p" medium>
+                                                            {`
+                                                                ${priceFormat(subItem)}
+                                                                ${pricePeriod(subItem)}
+                                                            `}
+                                                        </Text2>
+                                                    </Inline>
 
-                                        <Box paddingTop={16}>
-                                            <Inline alignItems="center" space={4}>
-                                                <ButtonPrimary onPress={() =>{}}>
-                                                    {'Quero esse'}                                                
-                                                </ButtonPrimary>
-                                                <ButtonLink onPress={() =>{}}>
-                                                    {'Conferir detalhes'}
-                                                </ButtonLink>
-                                            </Inline>
-                                        </Box>
+                                                    <Box paddingTop={16}>
+                                                        <Inline alignItems="center" space={4}>
+                                                            <ButtonPrimary onPress={() =>{}}>
+                                                                {'Quero esse'}                                                
+                                                            </ButtonPrimary>
+                                                            <ButtonLink onPress={() =>{}}>
+                                                                {'Conferir detalhes'}
+                                                            </ButtonLink>
+                                                        </Inline>
+                                                    </Box>
+                                                </Box>
+                                            }
+                                        />
                                     </Box>
-                                }
-                            />
-                        </Box>
-                    </React.Fragment>
+                                </React.Fragment>
+                            ))
+                        ))
+                    }
                 </Box>
                 
             </React.Fragment>

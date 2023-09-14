@@ -16,29 +16,37 @@ import {
     Text3,
     skinVars,
  } from "@telefonica/mistica";
+import useCartData from "../../hook/use-cart-data";
+import { Offer } from "../../types";
+import useDataFormat from "../../hook/use-data-format";
  
 function NewPlan(): JSX.Element{
-    const navigate = useNavigate()
+    const {takeInternetPlanSelected, totalPrice} = useCartData();
+    const {priceFormat, pricePeriod} = useDataFormat();
+
+    const navigate = useNavigate();
+
+    const newPlan: Offer = takeInternetPlanSelected();
 
     const handleBackNavigateButton = () => {
-        navigate(-1)
+        navigate(-1);
     }
 
     const handleButtonConfirm = () => {
-        console.log('Confirmar')
+        console.log('Confirmar');
     }
 
     const handleButtonLink = () => {
-        navigate('/vivo-fibra')
+        navigate('/vivo-fibra');
     }
 
     return(
         <>
             <React.Fragment>
-                    <FixedFooterLayout
-                        footer={
-                            <ResponsiveLayout>
-                                <Box paddingY={16}>
+                <FixedFooterLayout
+                    footer={
+                        <ResponsiveLayout>
+                            <Box paddingY={16}>
                                 <Inline space="between" alignItems="center">
                                     <Box>
                                         <Text1 regular as="p">
@@ -46,13 +54,12 @@ function NewPlan(): JSX.Element{
                                         </Text1>
                                         <Inline space={0} alignItems="baseline">
                                             <Text3 medium as="p">
-                                                {`R$195,99`}
+                                                {priceFormat(String(totalPrice))}
                                             </Text3>
+                                           
                                             <Text1 as="p" regular>
-                                                {`/dia`}
-                                            </Text1>
-                                                        
-                                                
+                                                {pricePeriod(newPlan)}
+                                            </Text1>            
                                         </Inline>
                                     </Box>
 
@@ -63,9 +70,9 @@ function NewPlan(): JSX.Element{
                                     </Box>
                                 </Inline>
                             </Box>
-                            </ResponsiveLayout>
-                        }
-                        >
+                        </ResponsiveLayout>
+                    }
+                >
                         <NavigationBar
                             onBack={() => {handleBackNavigateButton()}}
                             isInverse
@@ -73,9 +80,11 @@ function NewPlan(): JSX.Element{
                         />
                         <Box paddingTop={24}>
                         <Row
-                            title={`Vivo Fibra 500 Mega
-                            Netflix Premium`}
-                            description={`R$ 195,99/mês`}
+                            title={newPlan.displayName}
+                            description={`
+                                ${priceFormat(newPlan)}
+                                ${pricePeriod(newPlan)}
+                            `}
                             asset={<IconWifiRegular color={skinVars.colors.promoHighInverse} />}
                             right={
                                 <Stack space="around">
@@ -90,7 +99,7 @@ function NewPlan(): JSX.Element{
                             <Divider />
                         </Box>
                     </Box>
-                    </FixedFooterLayout>
+                </FixedFooterLayout>
             </React.Fragment>
         </>
     )

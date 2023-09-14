@@ -19,19 +19,33 @@ import {
   TextLink,
   skinVars,
 } from '@telefonica/mistica';
-import { GetOffers } from '../../types';
+import { GetOffers, Offer } from '../../types';
+import useCartData from '../../hook/use-cart-data';
+import useDataFormat from '../../hook/use-data-format';
 
 function OfferRecommended() {
+  const {
+    pricePeriod,
+    priceFormat,
+  } = useDataFormat();
+
   const navigate = useNavigate();
   
   // const [isLoading, setIsLoading] = useState(true);
+  const {
+    sendInternetPlanSelected, 
+    sendAllOffers,
+    sendOffersDetails
+  } = useCartData()
   const [getOffers, setGetOffers] = useState<GetOffers[]>([]);
 
-  const handleButtonCheckOfferDetails = () => {
+  const handleButtonCheckOfferDetails = (item: Array<Offer>) => {
+    sendOffersDetails(item)
     navigate('/detalhes-ofertas');
   };
   
-  const handleButtonNewPlan = () => {
+  const handleButtonNewPlan = (planItem: Offer) => {
+    sendInternetPlanSelected(planItem);
     navigate('/checkout');
   }
 
@@ -54,6 +68,12 @@ function OfferRecommended() {
     fetchDataFromMock();
   }, []);
 
+  useEffect(() => {
+    return getOffers.length
+        ? sendAllOffers(getOffers)
+        : window.sessionStorage.removeItem('plan-change-ALL_OFFERS');
+  }, [sendAllOffers, getOffers]);
+
   return (
     <>
       <Box>
@@ -74,36 +94,11 @@ function OfferRecommended() {
                         </Text3>
                         <Inline space={0} alignItems='baseline'>
                           <Text2 as='p' regular>
-                            {item.ownerPlan.price}
+                            {priceFormat(item)}
                           </Text2>
-                          {(() => {
-                            switch(item.ownerPlan.recurringPeriod){
-                              case 'daily':
-                                return(
-                                  <Text2 as='p' regular>
-                                    {'/dia'}
-                                  </Text2>
-                                );
-                              case 'weekly':
-                                return(
-                                  <Text2 as='p' regular>
-                                    {'/semana'}
-                                  </Text2>
-                                );
-                              case 'yearly':
-                                return(
-                                  <Text2 as='p' regular>
-                                    {'/ano'}
-                                  </Text2>
-                                );
-                              default:
-                                return(
-                                  <Text2 as='p' regular>
-                                    {'/mês'}
-                                  </Text2>
-                                );
-                            }
-                          })()}
+                          <Text2 as='p' regular>
+                              {pricePeriod(item)}
+                          </Text2>
                         </Inline>
                       </Box>
                     </React.Fragment>
@@ -115,7 +110,7 @@ function OfferRecommended() {
                     <ButtonFixedFooterLayout
                       button={
                         <ButtonPrimary 
-                          onPress={() => handleButtonNewPlan()}>
+                          onPress={() => handleButtonNewPlan(item.bestOffer)}>
                             Quero esse
                         </ButtonPrimary>
                       }
@@ -141,37 +136,12 @@ function OfferRecommended() {
                                   </Text4>
                                   <Inline space={0} alignItems='baseline'>
                                     <Text6>
-                                      {`R$ ${item.bestOffer.monthlyPrices.replace('.', ',')}`}
+                                      {priceFormat(item)}
                                     </Text6>
                                     
-                                    {(() => {
-                                      switch(item.ownerPlan.recurringPeriod){
-                                        case 'daily':
-                                          return(
-                                            <Text2 as='p' regular>
-                                              {'/dia'}
-                                            </Text2>
-                                          );
-                                        case 'weekly':
-                                          return(
-                                            <Text2 as='p' regular>
-                                              {'/semana'}
-                                            </Text2>
-                                          );
-                                        case 'yearly':
-                                          return(
-                                            <Text2 as='p' regular>
-                                              {'/ano'}
-                                            </Text2>
-                                          );
-                                        default:
-                                          return(
-                                            <Text2 as='p' regular>
-                                              {'/mês'}
-                                            </Text2>
-                                          );
-                                      }
-                                    })()}
+                                    <Text2 as='p' regular>
+                                      {pricePeriod(item)}
+                                    </Text2>
                                   </Inline>
                                 </Box>
                                 
@@ -218,7 +188,7 @@ function OfferRecommended() {
                                 <Box paddingY={24}>
                                   <TextLink 
                                     onPress={() => {
-                                      handleButtonCheckOfferDetails()
+                                      handleButtonCheckOfferDetails([item.bestOffer])
                                     }}
                                     style={{fontSize: '14px', fontWeight: 700}}
                                   >
