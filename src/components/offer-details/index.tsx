@@ -40,6 +40,22 @@ function OfferDetails(): JSX.Element{
         navigate('/mais-ofertas');
     }
 
+    const renderSubproducts = (subItem: { name: string; category: string }) => {
+        return(
+            <React.Fragment key={subItem.name}>
+                <Box paddingTop={16}>
+                    <RowList>
+                        <Row 
+                            title={subItem.name}
+                            description={subItem.category}
+                            asset={<Avatar size={40} />}
+                        />
+                    </RowList>
+                </Box>
+            </React.Fragment>
+        )
+    }
+
     return(
         <>
             <React.Fragment>
@@ -84,19 +100,7 @@ function OfferDetails(): JSX.Element{
                         </Box>
 
                         {offersDetails.map((item: Offer) => (
-                            item.subProducts.slice(0, 3).map((subItem) =>
-                                <React.Fragment key={subItem.name}>
-                                    <Box paddingTop={16}>
-                                        <RowList>
-                                            <Row 
-                                                title={subItem.name}
-                                                description={subItem.category}
-                                                asset={<Avatar size={40} />}
-                                            />
-                                        </RowList>
-                                    </Box>
-                                </React.Fragment>
-                            )
+                            item.subProducts.slice(0, 3).map(renderSubproducts)
                         ))}
 
                         <Box paddingTop={16}>

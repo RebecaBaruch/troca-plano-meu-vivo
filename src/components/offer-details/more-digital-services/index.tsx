@@ -20,29 +20,34 @@ function MoreDigitalServices(): JSX.Element{
         navigate(-1);
     }
 
+    const renderSubproducts = (subItem: { name: string; category: string }) => {
+        return(
+            <React.Fragment key={subItem.name}>
+                <Box paddingTop={16}>
+                    <RowList>
+                        <Row 
+                            title={subItem.name}
+                            description={subItem.category}
+                            asset={<Avatar size={40} />}
+                        />
+                    </RowList>
+                </Box>
+            </React.Fragment>
+        )
+    }
+
     return(
             <>
                 <React.Fragment>
                     <NavigationBar
-                        onBack={()=> {handleBackNavigateButton()}}                            isInverse
+                        onBack={()=> {handleBackNavigateButton()}}                            
+                        isInverse
                         title={`Serviços digitais`}
                      />
             
                     <Box paddingTop={32}>
                         {offersDetails.map((item: Offer) => (
-                            item.subProducts.map((subItem) =>
-                                <React.Fragment key={subItem.name}>
-                                    <Box paddingTop={16}>
-                                        <RowList>
-                                            <Row 
-                                                title={subItem.name}
-                                                description={subItem.category}
-                                                asset={<Avatar size={40} />}
-                                            />
-                                        </RowList>
-                                    </Box>
-                                </React.Fragment>
-                            )
+                            item.subProducts.map(renderSubproducts)
                         ))}
                     </Box>
                 </React.Fragment>

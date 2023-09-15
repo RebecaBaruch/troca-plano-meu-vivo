@@ -12,6 +12,7 @@ import {
 } from "@telefonica/mistica";
 import useCartData from "../../hook/use-cart-data";
 import useDataFormat from "../../hook/use-data-format";
+import { Offer } from "../../types";
 
 function MoreOffers(): JSX.Element{
     const navigate = useNavigate();
@@ -23,6 +24,46 @@ function MoreOffers(): JSX.Element{
 
     const handleBackNavigateButton = () => {
         navigate(-1)
+    }
+
+    const renderDataCard = (subItem: Offer) => {
+        return (
+            <React.Fragment key={subItem.offerId}>
+                <Box paddingTop={16}>
+                    <DataCard
+                    extra={
+                        <Box>
+                        <Box>
+                            <Text3 medium>
+                            {subItem.displayName}
+                            </Text3>
+                        </Box>
+
+                        <Inline space={0} alignItems="baseline">
+                            <Text2 as="p" medium>
+                            {`
+                                ${priceFormat(subItem)}
+                                ${pricePeriod(subItem)}
+                            `}
+                            </Text2>
+                        </Inline>
+
+                        <Box paddingTop={16}>
+                            <Inline alignItems="center" space={4}>
+                            <ButtonPrimary onPress={() =>{}}>
+                                {'Quero esse'}                       
+                            </ButtonPrimary>
+                            <ButtonLink onPress={() =>{}}>
+                                {'Conferir detalhes'}
+                            </ButtonLink>
+                            </Inline>
+                        </Box>
+                        </Box>
+                    }
+                    />
+                </Box>
+            </React.Fragment>
+        );
     }
 
     return(
@@ -37,43 +78,7 @@ function MoreOffers(): JSX.Element{
                 <Box paddingTop={24} paddingBottom={40} paddingX={16}>
                     {moreOffers && 
                         moreOffers.map((item) => (
-                            item.otherOffers.map((subItem) => (
-                                <React.Fragment key={subItem.offerId}>
-                                    <Box paddingTop={16}>
-                                        <DataCard
-                                            extra={
-                                                <Box>
-                                                    <Box>
-                                                        <Text3 medium>
-                                                            {subItem.displayName}
-                                                        </Text3>
-                                                    </Box>
-
-                                                    <Inline space={0} alignItems="baseline">
-                                                        <Text2 as="p" medium>
-                                                            {`
-                                                                ${priceFormat(subItem)}
-                                                                ${pricePeriod(subItem)}
-                                                            `}
-                                                        </Text2>
-                                                    </Inline>
-
-                                                    <Box paddingTop={16}>
-                                                        <Inline alignItems="center" space={4}>
-                                                            <ButtonPrimary onPress={() =>{}}>
-                                                                {'Quero esse'}                                                
-                                                            </ButtonPrimary>
-                                                            <ButtonLink onPress={() =>{}}>
-                                                                {'Conferir detalhes'}
-                                                            </ButtonLink>
-                                                        </Inline>
-                                                    </Box>
-                                                </Box>
-                                            }
-                                        />
-                                    </Box>
-                                </React.Fragment>
-                            ))
+                            item.otherOffers.map(renderDataCard)
                         ))
                     }
                 </Box>
